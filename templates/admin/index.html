@@ -1,0 +1,68 @@
+{% extends 'admin/master.html' %}
+
+{% block body%}
+
+  <div class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      {% if current_user.status == 'site' %}
+      <h1 class="display-4">Добро пожаловать, {{current_user.login}}</h1>
+      {% else %}
+      <h1 class="display-4">Добро пожаловать, {{current_user.first_name}}</h1>
+      {% endif %}
+      <h4 class="display-5">Статистика:</h4>
+    </div>
+    <div class="card-columns">
+      <div class="card">
+      
+        <img class="card-img-top" src="{{ url_for('static', filename='orders.png') }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Заказы</h5>
+          <p class="card-text">
+            Оплачены: {{data['amount_succeeded']}}
+          </p>
+          <p class="card-text">
+            Не оплачены: {{data['amount_pending']}} 
+          </p>
+          <p class="card-text">
+            Отменены: {{data['amount_canceled']}}
+          </p>
+          <a class="btn btn-primary btn-block" href="/admin_panel/order">Подробнее</a>
+        </div>
+      </div>
+      <div class="card">
+      
+        <img class="card-img-top" src="{{ url_for('static', filename='users.png') }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Пользователи</h5>
+          <p class="card-text">
+            Количесво пользователей: {{data['amount_users']}}
+          </p>
+          <a class="btn btn-primary btn-block" href="/admin_panel/user">Подробнее</a>
+        </div>
+      </div>
+
+      <div class="card">
+      
+        <img class="card-img-top" src="{{ url_for('static', filename='item.png') }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Товары</h5>
+          <p class="card-text">
+            В наличии: {{data['amount_active_items']}}
+          </p>
+          <p class="card-text">
+            Нет в наличии: {{data['amount_disactive_items']}}
+          </p>
+          <a class="btn btn-primary btn-block" href="/admin_panel/item">Подробнее</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+    
+      
+  
+  
+  
+ 
+
+{% endblock %}

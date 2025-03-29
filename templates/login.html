@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Авторизация</title>
+{% endblock %}
+
+{% block body %}
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="card w-100" style="max-width: 400px;">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">Вход в систему</h3>
+      <form method="post">
+      {% for msg in get_flashed_messages() %}
+      <div class="alert alert-danger" role="alert">{{msg}}</div>
+      {% endfor %}
+
+        <div class="mb-3">
+           <label for="login" class="form-label">Логин</label>
+          <input type="text" class="form-control" id="login" name="login"
+                 aria-describedby="loginHelp"
+               required
+                pattern="^(?=.*\d)(?=.*[a-z])[\w\d]{5,16}$"
+
+               title="Буквы английского алфавита и цифры, от 5 до 16 символов."
+
+          >
+
+        <label for="password" class="form-label">Пароль</label>
+          <input type="password" class="form-control" id="password" name="password"
+          required
+
+          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])[A-Za-z\d\W_]{5,16}$"
+          title="Пароль должен содержать одну цифру, строчную букву, заглавную букву, один спецсимвол, без пробелов и должен состоять из 5-16 символов."
+
+          >
+
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" name="rememberMe" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Войти</button> <br>
+
+          <br>
+      </form>
+    <div>
+      Забыли пароль?
+      <a href="{{ url_for('reset_password_request') }}">Нажмите, чтобы его сбросить</a>
+      <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="https://oauth.telegram.org/auth?bot_id={{BOTID}}&origin={{BOTDOMAIN}}/login"><img src="https://telegram.org/favicon.ico?3" >Войти через Telegram</a>
+      <br>
+      <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" id = "aasd" href="/register">Зарегистрироваться</a>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{url_for('static', filename='validator.js')}}"></script>
+{% endblock %}

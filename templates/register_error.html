@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Ошибка регистрации!</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Ошибка регистрации!</h1>
+    <p>Пользователь с таким именем или номером телефона уже существует.</p>
+    <a class="btn btn-outline-primary" href="/register">Попробуйте еще раз</a>
+</div>
+{% endblock %}

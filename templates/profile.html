@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Личный кабинет</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="main-body">
+
+
+
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+
+                  {% if current_user.photo == 'default.png' %}
+                  <img src="{{ url_for('static', filename='users images/default.png') }}" alt="user_photo" class="rounded-circle" height="200">
+                  {% elif current_user.photo == 'gorkavo' %}
+                  <img src="{{ url_for('static', filename='users images/gorkavo.png') }}" alt="user_photo" class="rounded-circle" height="200">
+                  {% elif current_user.photo == 'sanych' %}
+                  <img src="{{ url_for('static', filename='users images/sanych.png') }}" alt="user_photo" class="rounded-circle" height="200">
+                  {% elif current_user.status == 'tg' %}
+                  <img src="{{current_user.photo}}" alt="user_photo" class="rounded-circle" height="200">
+                  {% else %}
+                  <img src="{{ url_for('static', filename='users images/' + current_user.photo) }}" alt="user_photo" class="rounded-circle" height="200">
+                  {% endif %}
+
+
+                    <div class="mt-3">
+
+                      {% if current_user.status == 'site' %}
+                      <h4>{{current_user.login}}</h4>
+                      {% else %}
+                      <h4>{{current_user.first_name}}</h4>
+                      {% endif %}
+
+                      {% if not current_user.second_name == None %}
+                      <h4>{{current_user.second_name}}</h4>
+                      {% endif %}
+
+                      {% if current_user.has_role('1') %}
+                      <p class="text-muted font-size-sm">Статус: Администратор</p>
+                      {% elif current_user.has_role('0')%}
+                      <p class="text-muted font-size-sm">Статус: Пользователь</p>
+                      {% elif current_user.id_role == 'moder' %}
+                      <p class="text-muted font-size-sm">Статус: Модератор</p>
+                      {% elif current_user.id_role == 'popusk' %}
+                      <p class="text-muted font-size-sm">Статус: Папущениц</p>
+                      {% endif %}
+
+
+                      <a class="btn btn-outline-primary" href="/logout" id ="logout">Выйти из аккаунта</a>
+
+                      {% if current_user.has_role('1') %}
+                      <a class="btn btn-outline-primary" href="/admin_panel" id ="admin">Админ-панель</a>
+                      {% endif %}
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Эл. почта</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{current_user.email}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Телефон</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{current_user.phone}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+
+                      <a class="btn btn-outline-primary" href="profile/edit_{{current_user.id}}">Изменить данные</a>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+          </div>
+
+</div>
+        <h2 class="mb-0">Мои заказы</h2>
+        <hr>
+
+              <div class="card mb-3">
+                <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Номер заказа</th>
+                      <th scope="col">Состав</th>
+                      <th scope="col">Цена</th>
+                      <th scope="col">Дата создания</th>
+                      <th scope="col">Статус</th>
+                    </tr>
+                  </thead>
+                  {% for el in data %}
+                  <tbody>
+                    <tr>
+                      <th scope="row">{{el.id}}</th>
+                      <td>{{el.description}}</td>
+                      <td>{{el.price}}</td>
+                      <td>{{el.created_at}}</td>
+                      <!-- {{el.payment_status}} -->
+                      <td>
+                      {% if el.payment_status == 'pending'%}
+                      <a class="btn btn-warning btn-block text-nowrap text-left" href="{{el.payment_url}}" id="pay" style="padding-left: 20px;">Оплатить?</a>
+                      {% elif el.payment_status == 'succeeded' %}
+                      <p class="text-success">Оплачен</p>
+                      {% elif el.payment_status == 'canceled' %}
+                      <p class="text-danger">Отменен</p>
+                      </td>
+
+                      {% endif %}
+                    </tr>
+                  </tbody>
+                  {% endfor %}
+                </table>
+              </div>
+
+
+              <!-- <a type="button" class="btn btn-outline-success" href="/profile">Наверх</a> -->
+              <button type="button" class="btn btn-secondary back-to-top" data-bs-toggle="tooltip" data-bs-placement="right" title="Наверх">Наверх
+              <i class="bi bi-arrow-up-short"></i>
+              </button>
+
+
+              </div>
+    </div>
+
+<script src="static/to_top.js"></script>
+    {% endblock %}
+
+  <!-- .back-to-top {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  padding: 0.75rem 1.5rem;
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+  margin-right: 0.5rem;
+} -->

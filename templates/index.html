@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+<title>Онлайн магазин</title>
+{% endblock %}
+{% block meta %}
+    <meta charset="UTF-8">
+    <meta name="description" content="Купить антенны в Белгороде - низкие цены.">
+    <meta name="keywords" content="антенны, Белгород, купить, В мире антенн, в, мире, антенн">
+    <title>Магазин</title>
+{% endblock %}
+{% block body %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Наши товары</h1>
+
+
+</div>
+
+<div class="container">
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for el in data %}
+  <div class="col my-4">
+
+    <div class="card h-100">
+      <img src="static/{{ el.id }}.png" class="card-img-top  mx-auto mt-3" alt="{{ el.title }}">
+      <div class="card-body">
+        <h5 class="card-title" >{{ el.title }} </h5>
+      </div>
+      <div class="card-footer">
+        <h5 class="card-title"  id = "price_{{ el.id }}">{{ el.price }} </h5> <h5 class="card-title" >Руб.</h5>
+        <button type="button" class="btn btn-primary" id = "btn_{{ el.id }}">Купить</button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+
+
+
+
+  <a class="btn btn btn-success btn-block" href="/cart" id ="total">Итого:</a>
+  <script src="static/index.js"></script>
+  <!-- <script src="static/fix.js"></script> -->
+{% endblock %}

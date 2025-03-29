@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Статус оплаты</title>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <h1>Статус оплаты</h1>
+    {% if status == 'succeeded' %}
+    <p>Заказ был успешно оплачен!</p>
+    <p>Ваш заказ:</p>
+    <p>{{ description }}</p>
+    {% elif status == 'pending' %}
+    <p>Оплата не была завершена.</p>
+    {% endif %}
+</div>
+
+<div class="container">
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for key,value in data.items() %}
+  <div class="col my-4">
+
+    <div class="card h-100">
+      <img src="static/{{ key }}.png" class="card-img-top  mx-auto mt-3" alt="{{ value }}">
+      <div class="card-body">
+        <h5 class="card-title" >{{ value }} </h5>
+
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+
+<div class="container">
+    <a class="btn btn-outline-primary" href="/">Вернуться на главную</a>
+</div>
+
+{% endblock %}

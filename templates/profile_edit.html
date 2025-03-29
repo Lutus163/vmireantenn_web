@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Изменение данных</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="main-body">
+
+
+
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+
+
+                  {% if current_user.photo == 'default.png' %}
+                  <img src="{{ url_for('static', filename='users images/default.png') }}" alt="user_photo" class="rounded-circle" height="200">
+                  {% elif current_user.photo == 'gorkavo' %}
+                  <img src="{{ url_for('static', filename='users images/gorkavo.png') }}" alt="user_photo" class="rounded-circle" height="200">
+                  {% elif current_user.photo == 'sanych' %}
+                  <img src="{{ url_for('static', filename='users images/sanych.png') }}" alt="user_photo" class="rounded-circle" height="200">
+                  {% elif current_user.status == 'tg' %}
+                  <img src="{{current_user.photo}}" alt="user_photo" class="rounded-circle" height="200">
+                  {% else %}
+                  <img src="{{ url_for('static', filename='users images/' + current_user.photo) }}" alt="user_photo" class="rounded-circle" height="200">
+                  {% endif %}
+
+
+                    <div class="mt-3">
+                      {% if current_user.status == 'site' %}
+                      <h4>{{current_user.login}}</h4>
+                      <p class="text-secondary mb-1" id = "user_name"></p>
+                      {% else %}
+                      <h4>{{current_user.first_name}}</h4>
+                      {% endif %}
+
+                      {% if current_user.status == 'tg' and current_user.second_name %}
+                      <h4>{{current_user.second_name}}</h4>
+                      <p class="text-secondary mb-1" id = "user_second_name"></p>
+                      {% endif %}
+
+                      {% if current_user.has_role('1') %}
+                      <p class="text-muted font-size-sm">Статус: Администратор</p>
+                      {% elif current_user.has_role('0')%}
+                      <p class="text-muted font-size-sm">Статус: Пользователь</p>
+                      {% elif current_user.id_role == 'moder' %}
+                      <p class="text-muted font-size-sm">Статус: Модератор</p>
+                      {% elif current_user.id_role == 'popusk' %}
+                      <p class="text-muted font-size-sm">Статус: Папущениц</p>
+                      {% endif %}
+
+
+                      <a class="btn btn-outline-primary" href="/logout" id ="logout">Выйти из аккаунта</a>
+                      {% if current_user.has_role('1') %}
+                      <a class="btn btn-outline-primary" href="/admin_panel" id ="admin">Админ-панель</a>
+                      {% endif %}
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+
+                  <h3 class="card-title text-center mb-4">Изменение данных в системе</h3>
+                  <hr>
+                  {% for msg in get_flashed_messages() %}
+                  <div class="alert alert-danger" role="alert">{{msg}}</div>
+                  {% endfor %}
+                  <div class="row">
+
+                    {% if not current_user.status == 'tg' %}
+                    <div class="col-sm-12">
+                      <form method="post">
+                        <div class="mb-3">
+                          <label for="login" class="form-label">Введите новый логин</label>
+                          <input type="text" class="form-control" id="login" name="login" aria-describedby="loginHelp" value="{{current_user.login}}"
+                          required
+                          >
+                          <button type="submit" class="btn btn-primary ">Изменить данные</button>
+                          {% endif %}
+                        </div>
+
+
+
+                      </form>
+                      <form method="post">
+                            {% if not current_user.status == 'tg' %}
+                        <div class="mb-3">
+                          <label for="password" class="form-label">Введите новый пароль</label>
+                          <input type="password" class="form-control" id="password" name="password"
+                          required
+
+
+                            >
+
+                          <button type="submit" class="btn btn-primary">Изменить данные</button>
+                        </div>
+                            {% endif %}
+
+                      </form>
+
+<form method="post">
+                        <div class="mb-3">
+                          <label for="phone" class="form-label">Введите новый телефон</label>
+                          <input type="text" class="form-control" id="phone" name="phone"
+                          required
+                          value="{{current_user.phone}}"
+                          >
+                          <button type="submit" class="btn btn-primary">Изменить данные</button>
+                        </div>
+                      </form>
+                      <form method="post">
+                        <div class="mb-3">
+                          <label for="password" class="form-label">Введите новую почту</label>
+                          <input type="text" class="form-control" id="email" name="email"
+                          required
+                          value="{{current_user.email}}"
+                          >
+                          <button type="submit" class="btn btn-primary">Изменить данные</button>
+                        </div>
+                      </form>
+                      <form enctype="multipart/form-data" method="POST">
+                          {% if not current_user.status == 'tg' %}
+                        <div class="mb-3">
+                          <label for="password" class="form-label">Выберете новое фото</label>
+                          <input type="file" class="form-control-file" id="file" name="file"
+                          required
+
+                          >
+                          <br>
+                          <button type="submit" class="btn btn-primary">Изменить данные</button>
+                        </div>
+                      </form>
+                        <br>
+                        {% endif %}
+
+
+                      <div>
+                        <div class="row">
+                        <form method="post">
+                            <div class="mb-3">
+                            <a href="/profile" class="btn btn-outline-primary text-left">Вернуться назад</a>
+                            </div>
+                        </form>
+                     </div>
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+              </div>
+<script src="{{ url_for('static', filename='validator.js') }}"></script>
+{% endblock %}

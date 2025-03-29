@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Регистрация</title>
+{% endblock %}
+
+{% block body %}
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="card w-100" style="max-width: 400px;">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">Регистрация в системе</h3>
+      {% for msg in get_flashed_messages() %}
+      <div class="alert alert-danger" role="alert">{{msg}}</div>
+      {% endfor %}
+      <form enctype="multipart/form-data" method="POST">
+        <div class="mb-3">
+          <label for="login" class="form-label">Логин</label>
+          <input type="text" class="form-control" id="login" name="login"
+                 aria-describedby="loginHelp"
+               required
+               pattern="^(?=.*\d)(?=.*[a-z])[\w\d]{5,16}$"
+
+               title="Буквы английского алфавита и цифры, от 5 до 16 символов."
+
+               >
+          <!--<div class="mb-3">
+          <label for="login" class="form-label">Телефон</label>
+          <input type="tel" class="form-control" id="phone" name="phone"
+               required
+               pattern="[+]{1}[7]{1}-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
+
+               title="Номер должен быть в формате +7-900-000-00-00"
+
+               >
+        </div> -->
+
+          <div class="mb-3">
+          <label for="phone" class="form-label">Телефон</label>
+          <input type="text" class="form-control" id="phone" name="phone"
+          required
+          >
+        </div>
+
+        <!-- email-->
+        <div class="mb-3">
+          <label for="password" class="form-label">Почта</label>
+          <input type="text" class="form-control" id="email" name="email"
+          required
+          >
+        </div>
+
+
+        </div>
+        <label for="password" class="form-label">Пароль</label>
+          <input type="password" class="form-control" id="password" name="password"
+          required
+
+          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])[A-Za-z\d\W_]{5,16}$"
+          title="Пароль должен содержать одну цифру, строчную букву, заглавную букву, один спецсимвол, без пробелов и должен состоять из 5-16 символов."
+
+          >
+
+
+        <!--img-->
+        <div class="mb-3">
+          <label for="file" class="form-label">Фото</label>
+          <input type="file" class="form-control-file" id="file" name="file"
+
+          >
+          <!-- pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*_)(?!.* ).{8,16}$" -->
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+        <br>
+        <br>
+
+        <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="https://oauth.telegram.org/auth?bot_id={{BOTID}}&origin={{BOTDOMAIN}}/login"><img src="https://telegram.org/favicon.ico?3" >Войти через Telegram</a>
+        <br>
+        <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" id = "aasd" href="/login">Войти</a>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+<script src="{{url_for('static', filename='validator.js')}}"></script>
+{% endblock %}
